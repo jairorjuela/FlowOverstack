@@ -1,1 +1,27 @@
-<h1>Hello Word</h1>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Preguntas</h1>
+      <br>
+      <% if signed_in? %>
+      <div class="text-right">
+        <%= link_to "Hacer Nueva Pregunta", new_question_path, class: "btn btn-warning btn-lg" %>
+      </div>
+      <% end %> 
+      <br>
+      <br>
+      <table class="table">
+        <tr>
+          <th>Pregunta</th>
+        </tr>
+        <% @questions.each do |question| %>
+          <tr>
+            <td><%= link_to question.title, question %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>
+
+

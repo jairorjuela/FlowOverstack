@@ -1,0 +1,22 @@
+<div class="container-fluid">
+  <div class="row"></div>
+    <div class="col-md-9">
+      <div class="jumbotron">
+    
+       <h3><%= @question.title %></h3>
+      <p><%= @question.body %></p>
+      <p>Pregunta del usuario <strong><%= @question.user.email %></strong></p>
+
+      <% if current_user.id == @question.user.id %>
+      <%= link_to 'Editar', edit_question_path(@question) %>
+      <%= link_to 'Borrar', question_path(@question), method: :delete %>
+      <% end %>
+      </div>
+    
+    <h3>Comentarios de la Pregunta</h3>
+
+    <h3>Respuestas</h3>
+  
+    </div>  
+  </div>
+</div>
