@@ -2,21 +2,43 @@
   <div class="row"></div>
     <div class="col-md-9">
       <div class="jumbotron">
-    
-       <h3><%= @question.title %></h3>
-      <p><%= @question.body %></p>
-      <p>Pregunta del usuario <strong><%= @question.user.email %></strong></p>
 
-      <% if current_user.id == @question.user.id %>
-      <%= link_to 'Editar', edit_question_path(@question) %>
-      <%= link_to 'Borrar', question_path(@question), method: :delete %>
-      <% end %>
+       <h3><%= @question.title %></h3>
+        <p><%= @question.body %></p>
+        <p>Pregunta del usuario <strong><%= @question.user.email %></strong></p>
+
+        <% if signed_in? %>
+          <% if current_user.id == @question.user.id %>
+            <%= link_to 'Editar', edit_question_path(@question) %>
+            <%= link_to 'Borrar', question_path(@question), method: :delete %>
+          <% end %>
+        <% end %>
       </div>
-    
-    <h3>Comentarios de la Pregunta</h3>
+
+      <% @question.comments.each do |comment| %>
+        <div class="panel panel-default">
+          <header class="panel-heading">
+            <%= comment.user.email %>
+          </header>
+          <div class="panel-body"><%= comment.body %></div>
+        </div>
+      <%end %>
+
+      <% if signed_in? %>
+        <h3>Comentarios de la Pregunta</h3>
+          <div class="container">
+            <h4>Hola  <strong><%= User.find_by(id: current_user.id).email %></strong> realiza tu comentario a la pregunta</h4>
+            <%= form_for [@question, @question.comments.build] do |f| %>
+            <div class="form-group">
+              <%= f.text_area :body, class: "form-control", placeholder: "Agregar Comentario"%>
+            </div>
+            <%= f.submit "Comentar", class: "btn btn-primary" %>
+            <% end %>
+          </div>
+      <% end %>
 
     <h3>Respuestas</h3>
-  
-    </div>  
+
+    </div>
   </div>
 </div>

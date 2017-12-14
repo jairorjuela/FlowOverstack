@@ -7,12 +7,17 @@
       <div class="text-right">
         <%= link_to "Hacer Nueva Pregunta", new_question_path, class: "btn btn-warning btn-lg" %>
       </div>
-      <% end %> 
+      <% end %>
+      <% unless signed_in? %>
+      <div class="text-right">
+        <%= link_to "Hacer Nueva Pregunta", user_session_path, class: "btn btn-warning btn-lg" %>
+      </div>
+      <% end %>
       <br>
       <br>
-      <table class="table">
+      <table class="table table-bordered">
         <tr>
-          <th>Pregunta</th>
+          <th>Preguntas</th>
         </tr>
         <% @questions.each do |question| %>
           <tr>
@@ -23,5 +28,3 @@
     </div>
   </div>
 </div>
-
-

@@ -2,8 +2,10 @@
 <html>
   <head>
     <title>FlowOverstack</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <%= csrf_meta_tags %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
@@ -20,6 +22,9 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="/">Flowoverstack</a>
+          <% if signed_in? %>
+          <a class="navbar-brand" href="/"> Hola! <%= User.find_by(id: [current_user.id]).email%></a>
+          <% end %>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -34,7 +39,9 @@
             <li><a href="/users/sign_up">Registrarse</a></li>
             <li><a href="/users/sign_in">Ingresar</a></li>
             <% end %>
-            <li><%= link_to 'Salir', destroy_user_session_path, method: :delete %></li>
+            <% if signed_in? %>
+            <li><%= link_to 'Salir', destroy_user_session_path, method: :delete, class: "btn-default-md" %></li>
+            <% end %>
           </ul>
         </div><!-- /.navbar -->
       </div><!-- /.container-fluid -->

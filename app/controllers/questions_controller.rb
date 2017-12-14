@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  
   def index
     @questions = Question.all
   end
@@ -33,7 +34,7 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
     @question.destroy
 
-    redirect_to questions_path  
+    redirect_to questions_path
   end
 
   private
