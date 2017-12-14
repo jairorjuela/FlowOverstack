@@ -11,7 +11,7 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-inverse">
+    <nav class="navbar navbar-fixed-top navbar-inverse">
       <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -21,7 +21,9 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
+          <% unless signed_in?%>
           <a class="navbar-brand" href="/">Flowoverstack</a>
+          <% end %>
           <% if signed_in? %>
           <a class="navbar-brand" href="/"> Hola! <%= User.find_by(id: [current_user.id]).email%></a>
           <% end %>
