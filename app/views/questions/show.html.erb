@@ -1,6 +1,4 @@
-</br>
-</br>
-<div class="container-fluid">
+<div class="container-fluid" style="margin-top:80px;">
   <div class="row">
     <div class="col-md-9">
       <div class="jumbotron">
@@ -18,11 +16,16 @@
   </div>
 </div>
 
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-9">
+        <h1><span class="label label-info">Comentarios</span></h1>
+    </div>
+
 <% @question.comments.each do |comment| %>
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-9">
-        <h5>Comentario de la Pregunta:</h5>
         <div class="text-right">
           <p style="font-size:18px;"> <%= comment.body %> <strong style="color:red; font-size:14px;"> Usuario: <%= comment.user.email %></strong></p>
           <hr class="col-md-12" style="width: 97%; color: black; height: 1px; background-color:black; margin-bottom:2px; margin-top:2px;" />
@@ -65,19 +68,34 @@
     <div class="col-md-9">
         <h1><span class="label label-info">Respuestas</span></h1>
     </div>
-      <% @question.answers.each do |answers| %>
+
+    <% @question.answers.each do |answer| %>
       <div class="row-fluid">
           <div class="col-md-9">
             <div class="jumbotron">
             <div class="container">
-              <p style="font-size:18px;"> <%= answers.body %> </p>
+              <p style="font-size:18px;"> <%= answer.body %> </p>
             </div>
             <div class="text-right">
-              <p style="font-size:18px;"><strong style="color:red; font-size:14px;"> Usuario: <%= answers.user.email %></strong></p>
+              <p style="font-size:18px;"><strong style="color:red; font-size:14px;"> Usuario: <%= answer.user.email %></strong></p>
             </div>
             <hr class="col-md-12" style="width: 72%; height: 2px; background-color:black; margin-bottom:5px; margin-top:5px;" />
             <div class="container">
-              <h7 style="font-size:18px;"> COMENTARIO </h7>
+
+
+              <% answer.comments.each do |comment| %>
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-md-9">
+                      <div class="text-right">
+                        <p style="font-size:18px;"> <%= comment.body %></p>
+                        <hr class="col-md-12" style="width: 97%; color: black; height: 1px; background-color:black; margin-bottom:2px; margin-top:2px;" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <%end %>
+
             </div>
             <div class="container-fluid">
               <div class="row">
@@ -86,7 +104,7 @@
                     <h3>Comentar la Respuesta</h3>
                       <div class="container">
                         <h4>Hola  <strong style="color:orange; font-size:19px;"><%= User.find_by(id: current_user.id).email %></strong> realiza tu comentario a la Respuesta</h4>
-                        <%= form_for [@question, @question.comments.build] do |f| %>
+                        <%= form_for [answer, answer.comments.build] do |f| %>
                         <div class="col-md-11">
                           <div class="form-group">
                             <%= f.text_area :body, class: "form-control", placeholder: "Agregar Comentario a la respuesta"%>
@@ -105,7 +123,7 @@
             </div>
           </div>
         </div>
-      <%end %>
+    <%end %>
     </div>
   </div>
 </div>
@@ -113,7 +131,7 @@
 
 
 
-<hr class="col-md-12" style="width: 72%; color: black; height: 2px; background-color:black; margin-bottom:5px; margin-top:5px;" />
+<hr class="col-md-12" style="width: 72%; color: black; height: 4px; background-color:black; margin-bottom:10px; margin-top:15px;" />
 
 <div class="container-fluid">
   <div class="row">
