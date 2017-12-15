@@ -29,3 +29,52 @@ hr.section-divider {
    margin-bottom:10px;
    margin-top:15px;
 }
+
+h1.index{
+  color: black;
+}
+
+tbody th {
+  font-size: 25px;
+  text-align: center;
+}
+
+tbody td {
+  font-size: 20px;
+  text-align: justify;
+  color: black;
+}
+
+td:hover {
+  background-color: #c0c0c0;
+}
+
+.table-bordered > thead > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > tfoot > tr > td {
+    border: 2px solid #131212;
+    padding: 9px;
+}
+
+.link-index{
+  color: black;
+}
+
+.btn-warning {
+    color: #fff;
+    background-color: #f0ad4e;
+    border-color: black;
+    border-width: 2px;
+    font-size: 20px;
+}
+
+.btn-warning:hover{
+  color: white;
+  background-color: black;
+  border-color: #f0ad4e;
+  border-width: 4px;
+  font-size: 28px;
+}
+
+.container .jumbotron, .container-fluid .jumbotron {
+    padding-left: 60px;
+    padding-right: 60px;
+}

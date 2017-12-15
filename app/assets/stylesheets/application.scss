@@ -1,3 +1,30 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "questions";
+
+
+#index {
+  background-color: #f0ad4e;
+    border-color: black;
+    height: 60px;
+    border-width: 1px;
+}
+
+body {
+  background-color: #e0dbd3;
+}
+
+.navbar-brand:hover {
+  color: white !important;
+  font-size: 28px;
+}
+
+
+.navbar-inverse .navbar-brand {
+    color: black;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: black;
+    font-size: 18px;
+}

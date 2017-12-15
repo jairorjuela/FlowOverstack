@@ -1,8 +1,8 @@
-<div class="container-fluid" style="margin-top:80px;">
+<div class="container" style="margin-top:80px;">
 
   <!-- jumbotron que muestra la pregunta  -->
 <div class="jumbotron">
-  <h2>Pregunta del usuario <strong><%= @question.user.email     %></strong></h2>
+  <h2><strong><%= @question.user.email     %></strong></h2>
   <h3><%= @question.title %></h3>
   <p><%= @question.body %></p>
     <% if signed_in? %>
@@ -11,6 +11,20 @@
         <%= link_to 'Borrar', question_path(@question), method: :delete %>
       <% end %>
     <% end %>
+  </br>
+</br>
+    <% if @question.voted_by? current_user %>
+      <%= link_to 'Eliminar Voto',question_vote_path(@question), method: :delete %>
+      <p>Votos: <%= @question.votes.count %></p>
+    <% else %>
+      <%= link_to 'Votar!', question_vote_path(@question), method: :post%>
+      <p>Votos: <%= @question.votes.count %></p>
+    <% end %>
+Añadir comentario Contraer
+
+
+
+
 </div>
 
 <!-- Comentarios de las preguntas  -->
@@ -18,16 +32,13 @@
 
 <!-- Loop que muestra los comentarios de las preguntas  -->
 <% @question.comments.each do |comment| %>
-  <p> <%= comment.body %> <span class="user"> Usuario: <%= comment.user.email %></span></p>
+  <p> <%= comment.body %> <span class="user"> <%= comment.user.email %></span></p>
   <hr class="comments"/>
 <%end %>
 
 <!-- Form para comentar las preguntas -->
 <% if signed_in? %>
   <h3>Comentar la Pregunta</h3>
-  <h4>
-    Hola <span class="orange-user"><%= User.find_by(id: current_user.id).email %></span> realiza tu comentario a la pregunta
-  </h4>
 
   <%= form_for [@question, @question.comments.build] do |f| %>
     <div class="form-group">
@@ -51,10 +62,21 @@
 <!-- Loop que muestra las respuestas -->
 <% @question.answers.each do |answer| %>
   <div class="jumbotron">
-    <p> <%= answer.body %> </p>
+    <h3> <%= answer.body %> </h3>
     <p>
-      <span class="user"> Respuesta del usuario: <%= answer.user.email %></span>
+      <span class="user"><%= answer.user.email %></span>
     </p>
+
+  </br>
+</br>
+    <% if answer.voted_by? current_user %>
+      <%= link_to 'Eliminar Voto',answer_vote_path(answer), method: :delete %>
+      <p>Votos: <%= answer.votes.count %></p>
+    <% else %>
+      <%= link_to 'Votar!', answer_vote_path(answer), method: :post%>
+      <p>Votos: <%= answer.votes.count %></p>
+    <% end %>
+
     <hr class="comments"/>
 
 <!-- Loop que muestra los comentarios a las respuestas  -->
@@ -65,62 +87,38 @@
 
 
 <!-- Seccion de comentar las respuestas -->
-        <div class="row">
-          <div class="col-md-9">
-            <% if signed_in? %>
-              <h3>Comentar la Respuesta</h3>
-                <div class="container">
-                  <h4>Hola  <strong style="color:orange; font-size:19px;"><%= User.find_by(id: current_user.id).email %></strong> realiza tu comentario a la Respuesta</h4>
-                  <%= form_for [answer, answer.comments.build] do |f| %>
-                  <div class="col-md-11">
-                    <div class="form-group">
-                      <%= f.text_area :body, class: "form-control", placeholder: "Agregar Comentario a la respuesta"%>
-                    </div>
-                  <%= f.submit "Comentar", class: "btn btn-primary" %>
-                  <% end %>
-                </div>
-                </div>
-            <% else %>
-            <div class="text-right">
-              <%= link_to "Comentar Respuesta", user_session_path, class: "btn btn-primary" %>
-            </div>
-            <% end %>
-          </div>
-        </div>
+  <% if signed_in? %>
+    <h3>Comentar la Respuesta</h3>
+
+    <%= form_for [answer, answer.comments.build] do |f| %>
+    <div class="form-group">
+      <%= f.text_area :body, class: "form-control", placeholder: "Agregar Comentario a la respuesta"%>
     </div>
+        <%= f.submit "Comentar", class: "btn btn-primary" %>
+    <% end %>
+  <% else %>
+    <%= link_to "Comentar Respuesta", user_session_path, class: "btn btn-primary" %>
+  <% end %>
   </div>
 <%end %>
-</div>
-</div>
-</div>
 
 
 <!-- Linea que separa respuestas de preguntas para realizar nueva pregunta -->
-
-<hr class="col-md-12" style="width: 72%; color: black; height: 4px; background-color:black; margin-bottom:10px; margin-top:15px;" />
+<hr class="section-divider"/>
 
 <!-- Formulario para responder pregunta  -->
-<div class="container-fluid">
-<div class="row">
-<div class="col-md-9">
 <% if signed_in? %>
   <h3>Responde la Pregunta</h3>
-    <div class="container">
-      <h4>Hola  <strong style="color:orange; font-size:19px;"><%= User.find_by(id: current_user.id).email %></strong> Responde a la pregunta</h4>
-      <%= form_for [@question, @question.answers.build] do |f| %>
-      <div class="col-md-11">
-      <div class="form-group">
-        <%= f.text_area :body, class: "form-control", placeholder: "Respuesta"%>
-      </div>
-      <%= f.submit "Responder", class: "btn btn-primary" %>
-      <% end %>
+
+  <%= form_for [@question, @question.answers.build] do |f| %>
+    <div class="form-group">
+      <%= f.text_area :body, class: "form-control", placeholder: "Respuesta"%>
     </div>
-    </div>
+    <%= f.submit "Responder", class: "btn btn-primary" %>
+  <% end %>
 <% else %>
-<div class="text-right">
+<div>
   <%= link_to "Responder", user_session_path, class: "btn btn-primary" %>
 </div>
 <% end %>
-</div>
-</div>
 </div>
