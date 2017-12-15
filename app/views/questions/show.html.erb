@@ -58,17 +58,10 @@
     <hr class="comments"/>
 
 <!-- Loop que muestra los comentarios a las respuestas  -->
-
-<% answer.comments.each do |comment| %>
-  <div class="row">
-    <div class="col-md-9">
-      <div class="text-right">
-        <p style="font-size:18px;"> <%= comment.body %></p>
-        <hr class="col-md-12" style="width: 97%; color: black; height: 1px; background-color:black; margin-bottom:2px; margin-top:2px;" />
-      </div>
-    </div>
-  </div>
-<%end %>
+  <% answer.comments.each do |comment| %>
+    <p> <%= comment.body %></p>
+    <hr class="comments" />
+  <%end %>
 
 
 <!-- Seccion de comentar las respuestas -->
