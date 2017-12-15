@@ -2,5 +2,30 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.table {
-  background-color: #00ff00;}
+p {
+  font-size: 18px;
+}
+
+span.user {
+  color: red;
+  font-size: 14px;
+}
+
+hr.comments {
+  height: 1px;
+  background-color: black;
+  margin-bottom: 2px;
+  margin-top: 2px;
+}
+
+span.orange-user {
+  color:orange;
+  font-size:19px;
+}
+
+hr.section-divider {
+   height: 4px;
+   background-color:black;
+   margin-bottom:10px;
+   margin-top:15px;
+}

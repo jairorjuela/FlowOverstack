@@ -1,159 +1,133 @@
 <div class="container-fluid" style="margin-top:80px;">
-  <div class="row">
-    <div class="col-md-9">
-      <div class="jumbotron">
-        <h2>Pregunta del usuario <strong><%= @question.user.email     %></strong></h2>
-        <h3><%= @question.title %></h3>
-          <p><%= @question.body %></p>
-          <% if signed_in? %>
-            <% if current_user.id == @question.user.id %>
-              <%= link_to 'Editar', edit_question_path(@question) %>
-              <%= link_to 'Borrar', question_path(@question), method: :delete %>
-            <% end %>
-          <% end %>
-      </div>
-    </div>
-  </div>
+
+  <!-- jumbotron que muestra la pregunta  -->
+<div class="jumbotron">
+  <h2>Pregunta del usuario <strong><%= @question.user.email     %></strong></h2>
+  <h3><%= @question.title %></h3>
+  <p><%= @question.body %></p>
+    <% if signed_in? %>
+      <% if current_user.id == @question.user.id %>
+        <%= link_to 'Editar', edit_question_path(@question) %>
+        <%= link_to 'Borrar', question_path(@question), method: :delete %>
+      <% end %>
+    <% end %>
 </div>
 
-<div class="container-fluid">
+<!-- Comentarios de las preguntas  -->
+<h1><span class="label label-info">Comentarios</span></h1>
+
+<!-- Loop que muestra los comentarios de las preguntas  -->
+<% @question.comments.each do |comment| %>
+  <p> <%= comment.body %> <span class="user"> Usuario: <%= comment.user.email %></span></p>
+  <hr class="comments"/>
+<%end %>
+
+<!-- Form para comentar las preguntas -->
+<% if signed_in? %>
+  <h3>Comentar la Pregunta</h3>
+  <h4>
+    Hola <span class="orange-user"><%= User.find_by(id: current_user.id).email %></span> realiza tu comentario a la pregunta
+  </h4>
+
+  <%= form_for [@question, @question.comments.build] do |f| %>
+    <div class="form-group">
+      <%= f.text_area :body, class: "form-control", placeholder: "Agregar Comentario"%>
+    </div>
+      <%= f.submit "Comentar", class: "btn btn-primary" %>
+  <% end %>
+<% else %>
+<div>
+  <%= link_to "Comentar Pregunta", user_session_path, class: "btn btn-primary" %>
+</div>
+<% end %>
+
+
+<!-- Linea que divide Comentarios de respuestas   -->
+<hr class="section-divider"/>
+
+<!-- Titulo de Respuestas -->
+<h1><span class="label label-info">Respuestas</span></h1>
+
+<!-- Loop que muestra las respuestas -->
+<% @question.answers.each do |answer| %>
+  <div class="jumbotron">
+    <p> <%= answer.body %> </p>
+    <p>
+      <span class="user"> Respuesta del usuario: <%= answer.user.email %></span>
+    </p>
+    <hr class="comments"/>
+
+<!-- Loop que muestra los comentarios a las respuestas  -->
+
+<% answer.comments.each do |comment| %>
   <div class="row">
     <div class="col-md-9">
-        <h1><span class="label label-info">Comentarios</span></h1>
-    </div>
-
-<% @question.comments.each do |comment| %>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-9">
-        <div class="text-right">
-          <p style="font-size:18px;"> <%= comment.body %> <strong style="color:red; font-size:14px;"> Usuario: <%= comment.user.email %></strong></p>
-          <hr class="col-md-12" style="width: 97%; color: black; height: 1px; background-color:black; margin-bottom:2px; margin-top:2px;" />
-        </div>
+      <div class="text-right">
+        <p style="font-size:18px;"> <%= comment.body %></p>
+        <hr class="col-md-12" style="width: 97%; color: black; height: 1px; background-color:black; margin-bottom:2px; margin-top:2px;" />
       </div>
     </div>
   </div>
 <%end %>
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-9">
-      <% if signed_in? %>
-        <h3>Comentar la Pregunta</h3>
-          <div class="container">
-            <h4>Hola  <strong style="color:orange; font-size:19px;"><%= User.find_by(id: current_user.id).email %></strong> realiza tu comentario a la pregunta</h4>
-            <%= form_for [@question, @question.comments.build] do |f| %>
-            <div class="col-md-11">
-              <div class="form-group">
-                <%= f.text_area :body, class: "form-control", placeholder: "Agregar Comentario"%>
-              </div>
-            <%= f.submit "Comentar", class: "btn btn-primary" %>
-            <% end %>
-          </div>
-          </div>
-      <% else %>
-      <div class="text-right">
-        <%= link_to "Comentar Pregunta", user_session_path, class: "btn btn-primary" %>
-      </div>
-      <% end %>
-    </div>
-  </div>
-</div>
 
-
-<hr class="col-md-12" style="width: 72%; color: black; height: 4px; background-color:black; margin-bottom:10px; margin-top:15px;" />
-
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-9">
-        <h1><span class="label label-info">Respuestas</span></h1>
-    </div>
-
-    <% @question.answers.each do |answer| %>
-      <div class="row-fluid">
+<!-- Seccion de comentar las respuestas -->
+        <div class="row">
           <div class="col-md-9">
-            <div class="jumbotron">
-            <div class="container">
-              <p style="font-size:18px;"> <%= answer.body %> </p>
-            </div>
-            <div class="text-right">
-              <p style="font-size:18px;"><strong style="color:red; font-size:14px;"> Usuario: <%= answer.user.email %></strong></p>
-            </div>
-            <hr class="col-md-12" style="width: 72%; height: 2px; background-color:black; margin-bottom:5px; margin-top:5px;" />
-            <div class="container">
-
-
-              <% answer.comments.each do |comment| %>
-                <div class="container-fluid">
-                  <div class="row">
-                    <div class="col-md-9">
-                      <div class="text-right">
-                        <p style="font-size:18px;"> <%= comment.body %></p>
-                        <hr class="col-md-12" style="width: 97%; color: black; height: 1px; background-color:black; margin-bottom:2px; margin-top:2px;" />
-                      </div>
+            <% if signed_in? %>
+              <h3>Comentar la Respuesta</h3>
+                <div class="container">
+                  <h4>Hola  <strong style="color:orange; font-size:19px;"><%= User.find_by(id: current_user.id).email %></strong> realiza tu comentario a la Respuesta</h4>
+                  <%= form_for [answer, answer.comments.build] do |f| %>
+                  <div class="col-md-11">
+                    <div class="form-group">
+                      <%= f.text_area :body, class: "form-control", placeholder: "Agregar Comentario a la respuesta"%>
                     </div>
-                  </div>
-                </div>
-              <%end %>
-
-            </div>
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-md-9">
-                  <% if signed_in? %>
-                    <h3>Comentar la Respuesta</h3>
-                      <div class="container">
-                        <h4>Hola  <strong style="color:orange; font-size:19px;"><%= User.find_by(id: current_user.id).email %></strong> realiza tu comentario a la Respuesta</h4>
-                        <%= form_for [answer, answer.comments.build] do |f| %>
-                        <div class="col-md-11">
-                          <div class="form-group">
-                            <%= f.text_area :body, class: "form-control", placeholder: "Agregar Comentario a la respuesta"%>
-                          </div>
-                        <%= f.submit "Comentar", class: "btn btn-primary" %>
-                        <% end %>
-                      </div>
-                      </div>
-                  <% else %>
-                  <div class="text-right">
-                    <%= link_to "Comentar Respuesta", user_session_path, class: "btn btn-primary" %>
-                  </div>
+                  <%= f.submit "Comentar", class: "btn btn-primary" %>
                   <% end %>
                 </div>
-              </div>
+                </div>
+            <% else %>
+            <div class="text-right">
+              <%= link_to "Comentar Respuesta", user_session_path, class: "btn btn-primary" %>
             </div>
+            <% end %>
           </div>
         </div>
-    <%end %>
     </div>
   </div>
+<%end %>
+</div>
+</div>
 </div>
 
 
-
+<!-- Linea que separa respuestas de preguntas para realizar nueva pregunta -->
 
 <hr class="col-md-12" style="width: 72%; color: black; height: 4px; background-color:black; margin-bottom:10px; margin-top:15px;" />
 
+<!-- Formulario para responder pregunta  -->
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-9">
-      <% if signed_in? %>
-        <h3>Responde la Pregunta</h3>
-          <div class="container">
-            <h4>Hola  <strong style="color:orange; font-size:19px;"><%= User.find_by(id: current_user.id).email %></strong> Responde a la pregunta</h4>
-            <%= form_for [@question, @question.answers.build] do |f| %>
-            <div class="col-md-11">
-            <div class="form-group">
-              <%= f.text_area :body, class: "form-control", placeholder: "Respuesta"%>
-            </div>
-            <%= f.submit "Responder", class: "btn btn-primary" %>
-            <% end %>
-          </div>
-          </div>
-      <% else %>
-      <div class="text-right">
-        <%= link_to "Responder", user_session_path, class: "btn btn-primary" %>
+<div class="row">
+<div class="col-md-9">
+<% if signed_in? %>
+  <h3>Responde la Pregunta</h3>
+    <div class="container">
+      <h4>Hola  <strong style="color:orange; font-size:19px;"><%= User.find_by(id: current_user.id).email %></strong> Responde a la pregunta</h4>
+      <%= form_for [@question, @question.answers.build] do |f| %>
+      <div class="col-md-11">
+      <div class="form-group">
+        <%= f.text_area :body, class: "form-control", placeholder: "Respuesta"%>
       </div>
+      <%= f.submit "Responder", class: "btn btn-primary" %>
       <% end %>
     </div>
-  </div>
+    </div>
+<% else %>
+<div class="text-right">
+  <%= link_to "Responder", user_session_path, class: "btn btn-primary" %>
+</div>
+<% end %>
+</div>
+</div>
 </div>
