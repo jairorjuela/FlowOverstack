@@ -3,8 +3,8 @@
   <!-- jumbotron que muestra la pregunta  -->
 <div class="jumbotron">
   <h2><strong><%= @question.user.email     %></strong></h2>
-  <h3><%= @question.title %></h3>
-  <p><%= @question.body %></p>
+  <h3><%= markdown(@question.title) %></h3>
+  <p><%= markdown(@question.body) %></p>
     <% if signed_in? %>
       <% if current_user.id == @question.user.id %>
         <%= link_to 'Editar', edit_question_path(@question) %>
@@ -20,11 +20,6 @@
       <%= link_to 'Votar!', question_vote_path(@question), method: :post%>
       <p>Votos: <%= @question.votes.count %></p>
     <% end %>
-Añadir comentario Contraer
-
-
-
-
 </div>
 
 <!-- Comentarios de las preguntas  -->
@@ -32,7 +27,7 @@ Añadir comentario Contraer
 
 <!-- Loop que muestra los comentarios de las preguntas  -->
 <% @question.comments.each do |comment| %>
-  <p> <%= comment.body %> <span class="user"> <%= comment.user.email %></span></p>
+  <p> <%= markdown(comment.body) %> <span class="user"> <%= comment.user.email %></span></p>
   <hr class="comments"/>
 <%end %>
 
@@ -62,7 +57,7 @@ Añadir comentario Contraer
 <!-- Loop que muestra las respuestas -->
 <% @question.answers.each do |answer| %>
   <div class="jumbotron">
-    <h3> <%= answer.body %> </h3>
+    <h3> <%= markdown(answer.body) %> </h3>
     <p>
       <span class="user"><%= answer.user.email %></span>
     </p>
@@ -81,7 +76,7 @@ Añadir comentario Contraer
 
 <!-- Loop que muestra los comentarios a las respuestas  -->
   <% answer.comments.each do |comment| %>
-    <p> <%= comment.body %></p>
+    <p> <%= markdown(comment.body) %></p>
     <hr class="comments" />
   <%end %>
 
