@@ -207,7 +207,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails
   listen (>= 3.0.5, < 3.2)
-  pg (~> 0.18.4)
+  pg
   puma (~> 3.7)
   rails (~> 5.1.4)
   redcarpet (~> 3.0.0)
