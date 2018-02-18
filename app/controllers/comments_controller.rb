@@ -14,7 +14,7 @@ class CommentsController < ApplicationController
       answer = Answer.find(params[:answer_id])
       coment = answer.comments.new(comments_params)
       if coment.save
-        redirect_to answer.question, notice: 'No se permiten comentarios ni respuestas en blanco o vacias, intente de nuevo'
+        redirect_to answer.question
       else
         @errors = coment.errors.full_messages
         redirect_to answer.question, notice: 'No se permiten comentarios ni respuestas en blanco o vacias, intente de nuevo'
