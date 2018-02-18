@@ -35,16 +35,21 @@
 <% if signed_in? %>
   <h3>Comentar la Pregunta</h3>
 
+  <p id="notice" style="color:red; font-size:25px;"><%= notice %></p>
+
   <%= form_for [@question, @question.comments.build] do |f| %>
+
     <div class="form-group">
       <%= f.text_area :body, class: "form-control", placeholder: "Agregar Comentario"%>
     </div>
       <%= f.submit "Comentar", class: "btn btn-primary" %>
   <% end %>
+
 <% else %>
 <div>
   <%= link_to "Comentar Pregunta", user_session_path, class: "btn btn-primary" %>
 </div>
+
 <% end %>
 
 
@@ -80,23 +85,23 @@
     <hr class="comments" />
   <%end %>
 
-
 <!-- Seccion de comentar las respuestas -->
   <% if signed_in? %>
     <h3>Comentar la Respuesta</h3>
+
+    <p id="notice" style="color:red; font-size:25px;"><%= notice %></p>
 
     <%= form_for [answer, answer.comments.build] do |f| %>
     <div class="form-group">
       <%= f.text_area :body, class: "form-control", placeholder: "Agregar Comentario a la respuesta"%>
     </div>
-        <%= f.submit "Comentar", class: "btn btn-primary" %>
-    <% end %>
+    <%= f.submit "Comentar", class: "btn btn-primary" %>
+  <% end %>
   <% else %>
     <%= link_to "Comentar Respuesta", user_session_path, class: "btn btn-primary" %>
   <% end %>
   </div>
 <%end %>
-
 
 <!-- Linea que separa respuestas de preguntas para realizar nueva pregunta -->
 <hr class="section-divider"/>
@@ -104,6 +109,8 @@
 <!-- Formulario para responder pregunta  -->
 <% if signed_in? %>
   <h3>Responde la Pregunta</h3>
+
+  <p id="notice" style="color:red; font-size:25px;"><%= notice %></p>
 
   <%= form_for [@question, @question.answers.build] do |f| %>
     <div class="form-group">

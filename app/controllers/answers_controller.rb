@@ -1,9 +1,15 @@
 class AnswersController < ApplicationController
   def create
-    question = Question.find(params[:question_id])
-    question.answers.create(answers_params)
-
-    redirect_to question
+    if params[:question_id].present?
+      question = Question.find(params[:question_id])
+      answer = question.answers.new(answers_params)
+      if answer.save
+        redirect_to question
+      else
+        @errors = answer.errors.full_messages
+        redirect_to question, notice: 'No se permiten comentarios ni respuestas en blanco o vacias, intente de nuevo'
+      end
+    end 
   end
 
   def answers_params

@@ -2,16 +2,6 @@
   <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
       <h1>Nueva Pregunta</h1>
-
-      <% if @errors %>
-      <ul>
-        <% @errors.each do |error| %>
-        <li style="color:red; font-size:25px;"><%= error %></li>
-        <% error %>
-        <% end %>
-      </ul>
-      <% end %>
-
       <%= render 'form' %>
     </div>
   </div>
