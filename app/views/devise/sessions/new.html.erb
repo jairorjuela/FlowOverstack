@@ -2,6 +2,8 @@
   <h2>Log in</h2>
 
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
 
   <div class="row">
     <div class="col-xs-6 col-sm-3">
@@ -40,5 +42,12 @@
   </div>
 
 <% end %>
+
+<h3 style="color:red">
+  <%= devise_error_messages! %>
+  <% flash.each do |key, value| %>
+    <div class="flash <%= key %>"><%= value %></div>
+  <% end %>
+</h3>
 
 </div>

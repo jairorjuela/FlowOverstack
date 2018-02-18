@@ -7,6 +7,7 @@ class Question < ApplicationRecord
   validates :title, presence: true, allow_blank: false
   validates :body, presence: true, allow_blank: false
 
+
   def voted_by? (user)
     votes.exists?(user: user)
   end
