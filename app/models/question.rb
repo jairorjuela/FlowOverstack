@@ -1,4 +1,5 @@
 class Question < ApplicationRecord
+
   belongs_to :user
   has_many :answers, :dependent => :destroy
   has_many :comments, as: :commentable, :dependent => :destroy
@@ -10,5 +11,4 @@ class Question < ApplicationRecord
   def voted_by? (user)
     votes.exists?(user: user)
   end
-
 end

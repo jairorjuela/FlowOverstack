@@ -1,4 +1,5 @@
 class Answer < ApplicationRecord
+
   belongs_to :user
   belongs_to :question
   has_many :comments, as: :commentable
@@ -9,5 +10,4 @@ class Answer < ApplicationRecord
   def voted_by? (user)
     votes.exists?(user: user)
   end
-
 end
