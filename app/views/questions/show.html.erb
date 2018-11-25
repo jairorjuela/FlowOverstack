@@ -11,8 +11,8 @@
         <%= link_to 'Borrar', question_path(@question), method: :delete %>
       <% end %>
     <% end %>
-  </br>
-</br>
+  <br>
+<br>
     <% if @question.voted_by? current_user %>
       <%= link_to 'Eliminar Voto',question_vote_path(@question), method: :delete %>
       <p>Votos: <%= @question.votes.count %></p>
@@ -67,8 +67,8 @@
       <span class="user"><%= answer.user.email %></span>
     </p>
 
-  </br>
-</br>
+  <br>
+<br>
     <% if answer.voted_by? current_user %>
       <%= link_to 'Eliminar Voto',answer_vote_path(answer), method: :delete %>
       <p>Votos: <%= answer.votes.count %></p>
